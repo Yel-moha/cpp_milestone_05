@@ -10,6 +10,7 @@ class Bureaucrat {
         int grade;//A grade that ranges from 1 (highest possible grade) to 150 (lowest possible grade).
 
     public:
+        
 
         
 
