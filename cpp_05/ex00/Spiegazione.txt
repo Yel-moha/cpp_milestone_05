@@ -1,0 +1,177 @@
+Bureaucrat – spiegazione del subject (ex00)
+
+Obiettivo dell'esercizio
+
+L'esercizio chiede di creare una classe Bureaucrat con:
+- un nome immutabile;
+- un grado compreso tra 1 e 150;
+- la possibilità di aumentare o diminuire il grado;
+- la gestione delle eccezioni quando il grado non è valido.
+
+La regola chiave è questa:
+- 1 = autorità massima;
+- 150 = autorità minima.
+
+Quindi, un grado basso corrisponde a un'autorità più alta, mentre un
+grado alto corrisponde a un'autorità più bassa.
+
+Regole del subject
+
+Il subject dice che le eccezioni rappresentano uno stato invalido.
+Chi rileva il problema fa throw; chi chiama la funzione usa try/catch
+per gestire l'errore e mostrare il motivo.
+
+Per questo esercizio, i casi invalidi sono:
+- grade < 1  -> GradeTooHighException
+- grade > 150 -> GradeTooLowException
+
+Inoltre, se un bureaucrat prova a incrementare il proprio grado quando
+è già a 1, oppure a decrementarlo quando è già a 150, il programma
+lancia un'eccezione.
+
+Esempio di gestione dell'errore
+
+try
+{
+    Bureaucrat b("Alice", 0);
+}
+catch (const std::exception &e)
+{
+    std::cout << e.what() << std::endl;
+}
+
+Se il grado non è valido, il costruttore fallisce e il messaggio
+trasmesso dall'eccezione viene stampato.
+
+Eccezioni da implementare
+
+Le eccezioni devono essere classi annidate dentro Bureaucrat e devono
+ereditare da std::exception. In questo modo un catch
+(std::exception &e) può catturarle tutte in modo uniforme.
+
+Esempio corretto in C++98:
+
+class GradeTooHighException : public std::exception
+{
+public:
+    virtual const char *what() const throw()
+    {
+        return "grade is too high";
+    }
+};
+
+class GradeTooLowException : public std::exception
+{
+public:
+    virtual const char *what() const throw()
+    {
+        return "grade is too low";
+    }
+};
+
+Il punto importante è che what() restituisce una stringa descrittiva,
+che verrà mostrata dal catch.
+
+Costruttore e inizializzazione
+
+Il subject richiede che, dal modulo 02 in poi, le classi seguano la
+Orthodox Canonical Form, cioè abbiano:
+- costruttore di default;
+- copy constructor;
+- copy assignment operator;
+- distruttore.
+
+Per Bureaucrat, c'è anche un costruttore specifico con nome e grado.
+Poiché il nome è const, non possiamo assegnarlo nel corpo del
+costruttore: lo inizializziamo con una initializer list.
+
+Esempio:
+
+Bureaucrat::Bureaucrat(const std::string &name, int grade)
+    : _name(name), _grade(grade)
+{
+    if (_grade < 1)
+        throw GradeTooHighException();
+    if (_grade > 150)
+        throw GradeTooLowException();
+}
+
+Questo è il modo corretto perché _name è const e va impostato solo
+una volta, all'inizio della costruzione.
+
+Funzioni incrementGrade() e decrementGrade()
+
+Le funzioni devono controllare prima di modificare il valore.
+
+Esempio:
+
+void Bureaucrat::incrementGrade()
+{
+    if (_grade == 1)
+        throw GradeTooHighException();
+    --_grade;
+}
+
+void Bureaucrat::decrementGrade()
+{
+    if (_grade == 150)
+        throw GradeTooLowException();
+    ++_grade;
+}
+
+In pratica:
+- se il grado è 1, non si può aumentare ulteriormente;
+- se il grado è 150, non si può diminuire ulteriormente.
+
+Casi pratici
+
+- Bureaucrat("Alice", 1)    -> valido
+- Bureaucrat("Bob", 150)    -> valido
+- Bureaucrat("Charlie", 0) -> throw GradeTooHighException
+- Bureaucrat("Dave", 151)   -> throw GradeTooLowException
+- bob.incrementGrade() con bob == 1 -> throw GradeTooHighException
+- bob.decrementGrade() con bob == 150 -> throw GradeTooLowException
+
+Nota importante
+
+L'idea del subject è che l'oggetto non deve mai trovarsi in uno stato
+invalido. Per questo motivo la validazione avviene subito nel
+costruttore e prima di ogni modifica del grado.
+
+In altre parole:
+- il costruttore non permette valori fuori range;
+- increment/decrement non permettono di uscire dai limiti di 1..150;
+- un'eccezione segnala che la richiesta non può essere eseguita.
+
+Questo rende il programma robusto e fa sì che il Bureaucrat mantenga
+sempre una struttura coerente e corretta.
+
+Esempio completo molto semplice
+
+try
+{
+    Bureaucrat boss("Boss", 1);
+    std::cout << boss.getName() << " has grade " << boss.getGrade()
+              << std::endl;
+
+    boss.incrementGrade();
+}
+catch (const std::exception &e)
+{
+    std::cout << e.what() << std::endl;
+}
+
+In questo esempio, l'incremento fallisce perché il grado 1 è già il
+massimo valore consentito.
+
+Riassunto finale
+
+Il Bureaucrat è un oggetto semplice ma con regole molto precise:
+- nome immutabile;
+- grado in [1, 150];
+- eccezioni per valori fuori range;
+- controllo preventivo prima di tutte le modifiche;
+- gestione standard con try/catch e std::exception.
+
+Questo è il cuore dell'ex00: costruire un oggetto sempre valido e
+far capire al programma quando una richiesta non può essere eseguita.
