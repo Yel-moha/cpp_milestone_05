@@ -1,0 +1,101 @@
+Ho letto i file di ex02. Al momento l’esercizio è ancora allo scheletro:
+i tre header dei form concreti e i loro .cpp sono vuoti; main.cpp è ancora
+quello di ex01 e usa Form, mentre in ex02 la classe deve chiamarsi AForm.
+Inoltre Bureaucrat.cpp include un Form.hpp che non esiste in questa cartella.
+Quindi, così com’è, ex02 non è ancora compilabile.
+
+1. Correggi AForm: regole comuni e interfaccia astratta
+
+I dati privati e i getter che hai preparato sono la base giusta. La correzione
+concettuale principale è questa: hai dichiarato beSigned() come funzione pura
+virtuale, ma deve essere un metodo concreto che firma il modulo, come in ex01.
+
+AForm deve invece diventare astratta attraverso una funzione che rappresenta
+l’azione specifica di ciascun modulo. Per esempio:
+
+    void beSigned(const Bureaucrat &bureaucrat);
+    void execute(const Bureaucrat &executor) const;
+    virtual void executeAction() const = 0;
+    virtual ~AForm();
+
+- beSigned() controlla il grade necessario e aggiorna lo stato di firma.
+- execute() applica i controlli comuni a tutti i moduli: firma presente e
+  grade sufficiente. Se tutto va bene, chiama executeAction().
+- executeAction() è diversa per ogni modulo, quindi sarà implementata nelle
+  classi derivate.
+- Il distruttore deve essere virtual: così cancellare un form derivato tramite
+  un puntatore AForm* esegue correttamente anche il distruttore della classe
+  concreta.
+
+Nel tuo .cpp hai già un’implementazione di beSigned() compatibile con il
+comportamento richiesto; andrà mantenuta dopo aver corretto la dichiarazione
+nell’header. Ti serve inoltre un’eccezione per il caso in cui si tenti di
+eseguire un form non firmato, per esempio FormNotSignedException. Puoi usare
+GradeTooLowException anche per il grade insufficiente all’esecuzione.
+
+2. Implementa i tre form concreti
+
+Ogni classe derivata deve conservare il proprio target, inizializzare la base
+con nome e grade richiesti e implementare executeAction() const.
+
+Requisiti dei tre form:
+
+- ShrubberyCreationForm ("ShrubberyCreationForm"): grade 145 per firmare,
+  137 per eseguire. Crea <target>_shrubbery e scrive alberi ASCII.
+- RobotomyRequestForm ("RobotomyRequestForm"): grade 72 per firmare,
+  45 per eseguire. Fa rumori di perforazione e riesce nel 50% dei casi.
+- PresidentialPardonForm ("PresidentialPardonForm"): grade 25 per firmare,
+  5 per eseguire. Annuncia che il target è stato graziato da Zaphod Beeblebrox.
+
+La ragione per mettere l’azione in executeAction() è mantenere in AForm tutti
+i controlli condivisi e lasciare alle classi derivate soltanto il comportamento
+specifico. In questo modo, ogni form viene eseguito con la stessa sequenza di
+controlli.
+
+Per il form shrubbery ti servirà std::ofstream; per la robotomizzazione puoi
+usare la generazione casuale della libreria standard disponibile in C++98,
+come std::rand(). Per il target, usa una stringa membro inizializzata dal
+costruttore.
+
+3. Aggiungi Bureaucrat::executeForm
+
+In Bureaucrat.hpp dichiara class AForm; e aggiungi:
+
+    void executeForm(const AForm &form) const;
+
+Nel .cpp includi AForm.hpp, poi implementa il metodo chiamando
+form.execute(*this) dentro un try/catch. Se l’esecuzione riesce, stampa il
+messaggio di successo; se viene lanciata un’eccezione, stampa il messaggio
+d’errore.
+
+Questo è il collegamento tra bureaucrat e moduli: Bureaucrat non deve sapere
+quale delle tre classi concrete sta eseguendo. Gli basta conoscere
+l’interfaccia comune AForm.
+
+Nel codice attuale, Bureaucrat ha ancora signForm(Form&) e include "Form.hpp".
+Per ex02 devi passare a AForm; la firma resta gestita da signForm, mentre
+executeForm è il metodo nuovo richiesto.
+
+4. Aggiorna Makefile e main
+
+Il Makefile deve compilare AForm.cpp e i tre .cpp concreti, oltre a
+Bureaucrat.cpp e main.cpp. Al momento include solo main.cpp e Bureaucrat.cpp,
+quindi anche dopo aver scritto le classi il programma non le collegherebbe.
+
+Il nuovo main dovrebbe creare i tre tipi di form, farli firmare e poi provare
+almeno questi casi:
+
+1. Tentare l’esecuzione di un form non firmato.
+2. Tentare l’esecuzione con un bureaucrat dal grade insufficiente.
+3. Eseguire correttamente ciascun form.
+4. Osservare entrambi i possibili esiti della robotomizzazione.
+5. Verificare che il file shrubbery sia stato creato nella directory di lavoro.
+
+Questi casi controllano le due condizioni comuni in AForm::execute() e
+verificano che il polimorfismo faccia partire l’azione corretta per ciascun
+tipo di form.
+
+In breve, l’ordine consigliato è: correggere AForm, implementare le tre azioni
+concrete, collegare Bureaucrat::executeForm, aggiornare Makefile e main. Le
+parti già impostate nel tuo AForm.cpp — campi, getter, assegnazione dello stato
+di firma e validazione dei grade — possono essere riutilizzate.
