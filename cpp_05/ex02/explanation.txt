@@ -26,3 +26,12 @@ Segui le firme precise richieste dal tuo subject e usa lo standard C++98: in par
 
 
 11:42 AM
+
+ShrubberyCreationForm: Required grades: sign 145, exec 137
+Creates a file <target>_shrubbery in the working directory and writes ASCII trees
+inside it.
+• RobotomyRequestForm: Required grades: sign 72, exec 45
+Makes some drilling noises, then informs that <target> has been robotomized
+successfully 50% of the time. Otherwise, it informs that the robotomy failed.
+• PresidentialPardonForm: Required grades: sign 25, exec 5
+Informs that <target> has been pardoned by Zaphod Beeblebrox
