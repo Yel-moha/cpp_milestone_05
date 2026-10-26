@@ -1,3 +1,6 @@
 #include "ShrubberyCreationForm.hpp"
 
-ShrubberyCreationForm::exe
+ShrubberyCreationForm::ShrubberyCreationForm(std::string const &target)
+    : AForm("ShrubberyCreationForm", 25, 5), target(target)
+{  
+}

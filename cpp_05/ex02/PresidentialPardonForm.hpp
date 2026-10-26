@@ -6,7 +6,17 @@
 
 class PresidentialPardonForm : public AForm
 {
-
+    private:
+        std::string target;
+    
+    protected:
+        virtual void executeAcion() const;
+    
+    public:
+        PresidentialPardonForm(std::string const &target);
+        PresidentialPardonForm(PresidentialPardonForm const &other);
+        PresidentialPardonForm &operator=(PresidentialPardonForm const &other);
+        virtual ~PresidentialPardonForm();
 };
 
 

@@ -1,6 +1,6 @@
 #include "PresidentialPardonForm.hpp"
 
-PresidentialPardonForm::executeAction() const
-{
-    
+PresidentialPardonForm::PresidentialPardonForm(std::string const &target)
+    : AForm("PresidentialPardonForm", 25, 5), target(target)
+{  
 }
