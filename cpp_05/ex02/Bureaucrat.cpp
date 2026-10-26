@@ -74,6 +74,11 @@ void Bureaucrat::signForm(Form &form) const
 	}
 }
 
+void Bureaucrat::executeForm(Form const & form) const
+{
+/*Da definire */
+}
+
 Bureaucrat::~Bureaucrat()
 {
 }
