@@ -17,6 +17,8 @@ class ShrubberyCreationForm : public AForm
         ShrubberyCreationForm(ShrubberyCreationForm const &other);
         ShrubberyCreationForm &operator=(ShrubberyCreationForm const &other);
         virtual ~ShrubberyCreationForm();
+
+        std::string getTarget() const;
 };
 
 #endif

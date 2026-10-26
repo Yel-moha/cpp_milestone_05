@@ -1,6 +1,7 @@
-#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
 
-PresidentialPardonForm::executeAction() const
-{
-    
+RobotomyRequestForm::RobotomyRequestForm(std::string const &target)
+    : AForm("PresidentialPardonForm", 72, 45), target(target)
+{    
 }
+
