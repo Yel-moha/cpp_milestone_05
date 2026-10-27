@@ -1,4 +1,5 @@
 #include "ShrubberyCreationForm.hpp"
+#include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string const &target)
     : AForm("ShrubberyCreationForm", 145, 45), target(target)
@@ -27,4 +28,23 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 std::string ShrubberyCreationForm::getTarget() const
 {
     return target;
+}
+
+void ShrubberyCreationForm::executeAction() const
+{
+    std::ofstream output((target + "_shrubbery").c_str());
+    if (!output)
+        throw FileOpenException();
+
+    output << "       _-_" << std::endl;
+    output << "    /~~   ~~\\" << std::endl;
+    output << " /~~         ~~\\" << std::endl;
+    output << "{               }" << std::endl;
+    output << " \\  _-     -_  /" << std::endl;
+    output << "   ~  \\\\ //  ~" << std::endl;
+    output << "_- -   | | _- _" << std::endl;
+    output << "  _ -  | |   -_" << std::endl;
+    output << "      // \\\\" << std::endl;
+
+    output.close();
 }
