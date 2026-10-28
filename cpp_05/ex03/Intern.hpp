@@ -14,9 +14,9 @@ class Intern
         AForm* makeForm(const std::string& formName, const std::string& target) const;
 
     private:
-        AForm* createShrubberyCreationForm(const std::string& target);
-        AForm* createRobotomyRequestForm(const std::string& target);
-        AForm* createPresidentialPardonForm(const std::string& target);
+        static AForm* createShrubbery(const std::string& target);
+        static AForm* createRobotomy(const std::string& target);
+        static AForm* createPresidentialPardon(const std::string& target);
 };  
 
 #endif

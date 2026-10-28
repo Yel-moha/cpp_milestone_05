@@ -34,19 +34,13 @@ class Bureaucrat {
 		class GradeTooHighException : public std::exception
         {
             public:
-                virtual const char *what() const throw()
-                {
-                    return "grade is too high";
-                }
+                virtual const char *what() const throw();
 		};
 
 		class GradeTooLowException : public std::exception
         {
             public:
-                virtual const char *what() const throw()
-                {
-                    return "grade is too low";
-                }
+                virtual const char *what() const throw();
 		};
         ~Bureaucrat();
 };

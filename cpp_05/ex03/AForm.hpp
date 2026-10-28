@@ -2,7 +2,6 @@
 #define AForm_HPP
 
 #include <exception>
-#include "Bureaucrat.hpp"
 #include <iostream>
 #include <string>
 

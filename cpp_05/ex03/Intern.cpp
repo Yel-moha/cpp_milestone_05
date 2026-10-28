@@ -14,17 +14,17 @@ struct FormFactory
     FormCreator create;
 };
 
-static AForm* createShrubbery(const std::string& target)
+AForm* Intern::createShrubbery(const std::string& target)
 {
     return new ShrubberyCreationForm(target);
 }
 
-static AForm* createRobotomy(const std::string& target)
+AForm* Intern::createRobotomy(const std::string& target)
 {
     return new RobotomyRequestForm(target);
 }
 
-static AForm* createPresidentialPardon(const std::string& target)
+AForm* Intern::createPresidentialPardon(const std::string& target)
 {
     return new PresidentialPardonForm(target);
 }

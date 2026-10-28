@@ -2,7 +2,7 @@
 #include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string const &target)
-    : AForm("ShrubberyCreationForm", 145, 45), target(target)
+    : AForm("ShrubberyCreationForm", 145, 137), target(target)
 {  
 }
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &other)
@@ -28,6 +28,11 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 std::string ShrubberyCreationForm::getTarget() const
 {
     return target;
+}
+
+const char* ShrubberyCreationForm::FileOpenException::what() const throw()
+{
+    return "Failed to open the file for writing.";
 }
 
 void ShrubberyCreationForm::executeAction() const

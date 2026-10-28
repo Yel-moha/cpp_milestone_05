@@ -3,6 +3,7 @@
 #include "AForm.hpp"
 
 #include <iostream>
+#include <cstdlib>
 
 int main()
 {

@@ -5,11 +5,13 @@
 
 #include <exception>
 #include <iostream>
+#include <cstdlib>
 
 int main()
 {
     try
     {
+        srand(time(NULL));
         Bureaucrat boss("Boss", 1);
         Bureaucrat trainee("Trainee", 150);
 

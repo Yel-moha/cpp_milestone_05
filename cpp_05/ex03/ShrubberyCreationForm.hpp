@@ -21,11 +21,8 @@ public:
     
     class FileOpenException : public std::exception
     {
-    public:
-        virtual const char* what() const throw()
-        {
-            return "Failed to open the file for writing.";
-        }
+        public:
+            virtual const char* what() const throw();
     };
 };
 

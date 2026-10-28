@@ -15,8 +15,8 @@ int main()
 	junior.signForm(taxForm);
 	senior.signForm(taxForm);
 	junior.signForm(easyForm);
-	std::cout << "Tax form signed: " << taxForm.getIsSigned() << std::endl;
-	std::cout << "Easy form signed: " << easyForm.getIsSigned() << std::endl;
+	std::cout << "Tax form signed: " << std::boolalpha << taxForm.getIsSigned() << std::endl;
+	std::cout << "Easy form signed: " << easyForm.getIsSigned() << std::noboolalpha << std::endl;
 
 	std::cout << "\n=== Direct beSigned call ===" << std::endl;
 	try
