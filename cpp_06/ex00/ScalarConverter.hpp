@@ -11,7 +11,8 @@ class ScalarConverter
         static std::string literal;
 
     public:
+        ScalarConverter();
         static void convert(const std::string& literal);
-}
+};
 
 #endif
