@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <string>
+#include <climits>
+#include <cfloat>
+#include <cstdlib>
+#include <cctype>
 
 //Definisco struttura contenete tipi di cast
 
@@ -13,6 +17,7 @@ typedef enum e_cast_type
     INT = 2,
     FLOAT = 3,
     DOUBLE = 4,
+    SPECIAL = 5,
     NONE = -1
 } t_cast_type;
 
@@ -33,5 +38,5 @@ void covertToInt(const std::string& literal);
 void covertToFloat(const std::string& literal);
 void covertToDouble(const std::string& literal);
 void notConvert(const std::string& literal);
-t_cast_type getType(std::string &literal);
+t_cast_type getType(const std::string &literal);
 #endif

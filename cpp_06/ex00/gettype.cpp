@@ -77,7 +77,7 @@ static bool isSpecial(const std::string &literal)
             literal == "nanf" || literal == "+inff" || literal == "-inff");
 }
 
-t_cast_type getType(std::string &literal)
+t_cast_type getType(const std::string &literal)
 {
     size_t  dot = literal.find('.');
     size_t  f = literal.find('f');
@@ -104,6 +104,8 @@ t_cast_type getType(std::string &literal)
         else
             return (NONE);
     }
+    else if(isSpecial(literal))
+        return (SPECIAL);
     else
         return (NONE);
 }

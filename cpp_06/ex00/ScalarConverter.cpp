@@ -1,10 +1,5 @@
 #include "ScalarConverter.hpp"
 
-void ScalarConverter::convert(const std::string& literal)
-{
-    (void)literal;
-}
-
 ScalarConverter::ScalarConverter()
 {
 }
@@ -22,7 +17,7 @@ ScalarConverter::~ScalarConverter()
 {
 }
 
-static void ScalarConverter::convert(const std::string& literal)
+void ScalarConverter::convert(const std::string& literal)
 {
     t_cast_type type = getType(literal);
     switch (type)
@@ -38,6 +33,9 @@ static void ScalarConverter::convert(const std::string& literal)
             break;
         case DOUBLE:
             covertToDouble(literal);
+            break;
+        case SPECIAL:
+            notConvert(literal);
             break;
         default:
             std::cout << "Error: Invalid literal type." << std::endl;

@@ -23,7 +23,7 @@ void covertToInt(const std::string& literal)
 {
     try
     {
-        int value = std::stoi(literal);
+        int value = std::atoi(literal.c_str());
         std::cout << "char: ";
         if (value >= 0 && value <= 127 && std::isprint(value))
             std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
@@ -42,7 +42,7 @@ void covertToInt(const std::string& literal)
 
 void covertToFloat(const std::string& literal)
 {
-   float value = std::stof(literal);
+   float value = static_cast<float>(std::atof(literal.c_str()));
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
         std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
@@ -70,7 +70,7 @@ void covertToFloat(const std::string& literal)
 
 void covertToDouble(const std::string& literal)
 {
-   double value = std::stod(literal);
+   double value = std::atof(literal.c_str());
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
         std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
