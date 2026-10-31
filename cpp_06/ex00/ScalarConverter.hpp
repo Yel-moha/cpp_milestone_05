@@ -32,5 +32,6 @@ void covertToChar(const std::string& literal);
 void covertToInt(const std::string& literal);
 void covertToFloat(const std::string& literal);
 void covertToDouble(const std::string& literal);
+void notConvert(const std::string& literal);
 t_cast_type getType(std::string &literal);
 #endif
