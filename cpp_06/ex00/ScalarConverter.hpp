@@ -11,7 +11,7 @@ typedef enum e_cast_type
     OTHER = 0,
     CHAR = 1,
     INT = 2,
-    FLOAT = 2,
+    FLOAT = 3,
     DOUBLE = 4,
     NONE = -1
 } t_cast_type;
@@ -28,5 +28,9 @@ class ScalarConverter
         ~ScalarConverter();
 };
 
+void covertToChar(const std::string& literal);
+void covertToInt(const std::string& literal);
+void covertToFloat(const std::string& literal);
+void covertToDouble(const std::string& literal);
 t_cast_type getType(std::string &literal);
 #endif

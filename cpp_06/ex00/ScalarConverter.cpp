@@ -21,3 +21,26 @@ ScalarConverter &ScalarConverter ::operator=(ScalarConverter const &other)
 ScalarConverter::~ScalarConverter()
 {
 }
+
+static void ScalarConverter::convert(const std::string& literal)
+{
+    t_cast_type type = getType(literal);
+    switch (type)
+    {
+        case CHAR:
+            covertToChar(literal);
+            break;
+        case INT:
+            covertToInt(literal);
+            break;
+        case FLOAT:
+            covertToFloat(literal);
+            break;
+        case DOUBLE:
+            covertToDouble(literal);
+            break;
+        default:
+            std::cout << "Error: Invalid literal type." << std::endl;
+            break;
+    }
+}
