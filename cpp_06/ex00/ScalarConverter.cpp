@@ -1,5 +1,10 @@
 #include "ScalarConverter.hpp"
 
+void ScalarConverter::convert(const std::string& literal)
+{
+    (void)literal;
+}
+
 ScalarConverter::ScalarConverter()
 {
 }
