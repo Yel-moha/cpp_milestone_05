@@ -42,44 +42,58 @@ void covertToInt(const std::string& literal)
 
 void covertToFloat(const std::string& literal)
 {
-    try
-    {
-        float value = std::stof(literal);
-        std::cout << "char: ";
-        if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
-            std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
-        else
-            std::cout << "Non displayable" << std::endl;
-
-        std::cout << "int: " << static_cast<int>(value) << std::endl;
-        std::cout << "float: " << value << "f" << std::endl;
-        std::cout << "double: " << static_cast<double>(value) << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-        std::cout << "Error: Invalid float literal." << std::endl;
-    }
+   float value = std::stof(literal);
+    std::cout << "char: ";
+    if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
+        std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
+    else
+        std::cout << "Non displayable" << std::endl;
+    
+    std::cout << "int: ";
+    if (value < static_cast<float>(INT_MIN) || value > static_cast<float>(INT_MAX))
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << static_cast<int>(value) << std::endl;
+    
+    std::cout << "float: ";
+    if (value < -FLT_MAX || value > FLT_MAX)
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << value << "f" << std::endl;
+    
+    std::cout << "double: ";
+    if (value < -DBL_MAX || value > DBL_MAX)
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << static_cast<double>(value) << std::endl;
 }
 
 void covertToDouble(const std::string& literal)
 {
-    try
-    {
-        double value = std::stod(literal);
-        std::cout << "char: ";
-        if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
-            std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
-        else
-            std::cout << "Non displayable" << std::endl;
-
-        std::cout << "int: " << static_cast<int>(value) << std::endl;
-        std::cout << "float: " << static_cast<float>(value) << "f" << std::endl;
-        std::cout << "double: " << value << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-        std::cout << "Error: Invalid double literal." << std::endl;
-    }
+   double value = std::stod(literal);
+    std::cout << "char: ";
+    if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
+        std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
+    else
+        std::cout << "Non displayable" << std::endl;
+    
+    std::cout << "int: ";
+    if (value < static_cast<double>(INT_MIN) || value > static_cast<double>(INT_MAX))
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << static_cast<int>(value) << std::endl;
+    
+    std::cout << "float: ";
+    if (value < static_cast<double>(-FLT_MAX) || value > static_cast<double>(FLT_MAX))
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << static_cast<float>(value) << "f" << std::endl;
+    
+    std::cout << "double: ";
+    if (value < -DBL_MAX || value > DBL_MAX)
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << value << std::endl;
 }
 
 void notConvert(const std::string& literal)
