@@ -48,7 +48,8 @@ void covertToInt(const std::string& literal)
 
 void covertToFloat(const std::string& literal)
 {
-    float value = static_cast<float>(std::atof(literal.c_str()));
+    float value = std::atof(literal.c_str());
+    bool tol = std::fabs(value - static_cast<int>(value)) < 0.0000000000001;
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
         std::cout << "'" << static_cast<char>(value) << "'" << std::endl;

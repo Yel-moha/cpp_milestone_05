@@ -7,6 +7,7 @@
 #include <cfloat>
 #include <cstdlib>
 #include <cctype>
+#include <cmath>
 
 //Definisco struttura contenete tipi di cast
 
