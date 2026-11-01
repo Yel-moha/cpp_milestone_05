@@ -2,9 +2,13 @@
 
 void covertToChar(const std::string& literal)
 {
+    char c = '\0';
     if (literal.length() == 1 && std::isprint(literal[0]))
+        c = literal[0];
+    else if (literal.length() == 3 && std::isprint(literal[1]))
+        c = literal[1];
+    if(c != '\0')
     {
-        char c = literal[0];
         std::cout << "char: '" << c << "'" << std::endl;
         std::cout << "int: " << static_cast<int>(c) << std::endl;
         std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
@@ -21,28 +25,30 @@ void covertToChar(const std::string& literal)
 
 void covertToInt(const std::string& literal)
 {
-    try
-    {
-        int value = std::atoi(literal.c_str());
-        std::cout << "char: ";
-        if (value >= 0 && value <= 127 && std::isprint(value))
-            std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
-        else
-            std::cout << "Non displayable" << std::endl;
-
-        std::cout << "int: " << value << std::endl;
+    long value = std::atol(literal.c_str());
+    std::cout << "char: ";
+    if (value >= 0 && value <= 127 && std::isprint(value))
+        std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
+    else
+        std::cout << "Non displayable" << std::endl;
+    
+    std::cout << "int: ";
+    if(value < INT_MIN || value > INT_MAX)
+        std::cout << "impossibile" << std::endl;
+    else
+        std::cout << static_cast<int>(value) << std::endl;
+    
+    std::cout << "float: ";
+    if(value < FLT_MIN || value > FLT_MAX)
+        std::cout << "impossibile" << std::endl;
+    else
         std::cout << "float: " << static_cast<float>(value) << ".0f" << std::endl;
-        std::cout << "double: " << static_cast<double>(value) << ".0" << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-        std::cout << "Error: Invalid integer literal." << std::endl;
-    }
+    std::cout << "double: " << static_cast<double>(value) << ".0" << std::endl;
 }
 
 void covertToFloat(const std::string& literal)
 {
-   float value = static_cast<float>(std::atof(literal.c_str()));
+    float value = static_cast<float>(std::atof(literal.c_str()));
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
         std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
@@ -70,7 +76,7 @@ void covertToFloat(const std::string& literal)
 
 void covertToDouble(const std::string& literal)
 {
-   double value = std::atof(literal.c_str());
+    double value = std::atof(literal.c_str());
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
         std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
