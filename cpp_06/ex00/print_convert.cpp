@@ -25,6 +25,7 @@ void covertToChar(const std::string& literal)
 
 void covertToInt(const std::string& literal)
 {
+    // FIXME: atol non distingue bene overflow e input non valido.
     long value = std::atol(literal.c_str());
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(value))
@@ -33,22 +34,25 @@ void covertToInt(const std::string& literal)
         std::cout << "Non displayable" << std::endl;
     
     std::cout << "int: ";
+    // FIXME: uniformare "impossibile" / "impossible" in tutto il file.
     if(value < INT_MIN || value > INT_MAX)
         std::cout << "impossibile" << std::endl;
     else
         std::cout << static_cast<int>(value) << std::endl;
     
     std::cout << "float: ";
-    if(value < FLT_MIN || value > FLT_MAX)
+    if(value < -FLT_MAX || value > FLT_MAX)
         std::cout << "impossibile" << std::endl;
     else
-        std::cout << "float: " << static_cast<float>(value) << ".0f" << std::endl;
+        std::cout << static_cast<float>(value) << ".0f" << std::endl;
     std::cout << "double: " << static_cast<double>(value) << ".0" << std::endl;
 }
 
 void covertToFloat(const std::string& literal)
 {
+    // FIXME: valutare parser piu robusto rispetto ad atof.
     double value = std::atof(literal.c_str()); // da valutare se cambiare atof
+    // FIXME: questo cast a int puo essere problematico per valori fuori range int.
     bool tol = std::fabs(value - static_cast<int>(value)) < 0.0000000000001;
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
@@ -57,6 +61,7 @@ void covertToFloat(const std::string& literal)
         std::cout << "Non displayable" << std::endl;
     
     std::cout << "int: ";
+    // FIXME: verificare se il confronto con float(INT_MIN/INT_MAX) e quello desiderato.
     if (value < static_cast<float>(INT_MIN) || value > static_cast<float>(INT_MAX))
         std::cout << "impossible" << std::endl;
     else
@@ -67,6 +72,7 @@ void covertToFloat(const std::string& literal)
         std::cout << "impossible" << std::endl;
     else
     {
+        // FIXME: controllare formato richiesto per interi in float (es. 42.0f vs 42f).
         std::cout << value ;
         if(tol)
             std::cout << ".0f" <<std::endl;
@@ -79,6 +85,7 @@ void covertToFloat(const std::string& literal)
 
 void covertToDouble(const std::string& literal)
 {
+    // FIXME: valutare parser piu robusto rispetto ad atof.
     double value = std::atof(literal.c_str());
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
@@ -99,6 +106,7 @@ void covertToDouble(const std::string& literal)
         std::cout << static_cast<float>(value) << "f" << std::endl;
     
     std::cout << "double: ";
+    // FIXME: controllo ridondante sul range double; chiarire gestione esplicita di inf/nan.
     if (value < -DBL_MAX || value > DBL_MAX)
         std::cout << "impossible" << std::endl;
     else
@@ -107,6 +115,7 @@ void covertToDouble(const std::string& literal)
 
 void notConvert(const std::string& literal)
 {
+    // FIXME: uniformare output ("impossible" vs "impossibile") e spaziatura ("char :"/"int :").
     if(literal == "nan" || literal == "nanf" )  
     {
         std::cout << "char: impossibile" <<std::endl;
