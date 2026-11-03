@@ -19,8 +19,9 @@ static bool isInt(const std::string &literal)
 static bool isFloat(const std::string &literal)
 {
     size_t lenlit = literal.length();
-    if(lenlit == 0)
+    if(lenlit < 2 || literal[lenlit - 1] != 'f')
         return (false);
+    lenlit--;
     size_t i = 0;
     if (literal[i] == '-' || literal[i] == '+')
         i++;
@@ -79,6 +80,8 @@ static bool isSpecial(const std::string &literal)
 
 t_cast_type getType(const std::string &literal)
 {
+    if (isSpecial(literal))
+        return (SPECIAL);
     size_t  dot = literal.find('.');
     size_t  f = literal.find('f');
     if(dot == std::string::npos && f == std::string::npos)
@@ -104,8 +107,6 @@ t_cast_type getType(const std::string &literal)
         else
             return (NONE);
     }
-    else if(isSpecial(literal))
-        return (SPECIAL);
     else
         return (NONE);
 }
