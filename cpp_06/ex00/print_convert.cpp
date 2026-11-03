@@ -66,7 +66,13 @@ void covertToFloat(const std::string& literal)
     if (value < -FLT_MAX || value > FLT_MAX)
         std::cout << "impossible" << std::endl;
     else
-        std::cout << value << (tol ? ".0f" : "f") << std::endl;
+    {
+        std::cout << value ;
+        if(tol)
+            std::cout << ".0f" <<std::endl;
+        else
+            std::cout << "f" << std::endl;
+    }
     
     std::cout << "double: " << static_cast<double>(value) << (tol ? ".0" : "") << std::endl;
 }
