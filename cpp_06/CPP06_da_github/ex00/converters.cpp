@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converters.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgodecke <cgodecke@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: yel-moha <yel-moha@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:10:45 by cgodecke          #+#    #+#             */
-/*   Updated: 2023/12/04 15:35:32 by cgodecke         ###   ########.fr       */
+/*   Updated: 2026/11/03 12:52:53 by yel-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

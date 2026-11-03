@@ -48,7 +48,7 @@ void covertToInt(const std::string& literal)
 
 void covertToFloat(const std::string& literal)
 {
-    float value = std::atof(literal.c_str());
+    double value = std::atof(literal.c_str()); // da valutare se cambiare atof
     bool tol = std::fabs(value - static_cast<int>(value)) < 0.0000000000001;
     std::cout << "char: ";
     if (value >= 0 && value <= 127 && std::isprint(static_cast<int>(value)))
@@ -66,13 +66,9 @@ void covertToFloat(const std::string& literal)
     if (value < -FLT_MAX || value > FLT_MAX)
         std::cout << "impossible" << std::endl;
     else
-        std::cout << value << "f" << std::endl;
+        std::cout << value << (tol ? ".0f" : "f") << std::endl;
     
-    std::cout << "double: ";
-    if (value < -DBL_MAX || value > DBL_MAX)
-        std::cout << "impossible" << std::endl;
-    else
-        std::cout << static_cast<double>(value) << std::endl;
+    std::cout << "double: " << static_cast<double>(value) << (tol ? ".0" : "") << std::endl;
 }
 
 void covertToDouble(const std::string& literal)
