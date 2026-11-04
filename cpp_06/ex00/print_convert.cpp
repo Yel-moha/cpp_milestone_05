@@ -1,8 +1,8 @@
 #include "ScalarConverter.hpp"
-// DA CORREGGERE (nome): "covertTo..." ha un typo, manca la 'n' -> "convertTo...".
+// DA CORREGGERE (nome): "convertTo..." ha un typo, manca la 'n' -> "convertTo...". fatto
 // Non e' un errore di compilazione, ma in valutazione si nota. Rinominalo qui,
 // nell'.hpp e nello switch di ScalarConverter.cpp.
-void covertToChar(const std::string& literal)
+void convertToChar(const std::string& literal)
 {
     char c = literal.length() == 1 ? literal[0] : literal[1];
     int value = static_cast<unsigned char>(c);
@@ -26,7 +26,7 @@ void covertToChar(const std::string& literal)
         std::cout << "Non displayable" << std::endl;
 }
 
-void covertToInt(const std::string& literal)
+void convertToInt(const std::string& literal)
 {
     // DA CORREGGERE (overflow): atol non segnala errori. Con un input enorme
     // (es. 999999999999999999999) va in overflow del long e restituisce un
@@ -72,7 +72,7 @@ void covertToInt(const std::string& literal)
     std::cout << "double: " << static_cast<double>(value) << ".0" << std::endl;
 }
 
-void covertToFloat(const std::string& literal)
+void convertToFloat(const std::string& literal)
 {
 
     // DA CORREGGERE (tipo): atof restituisce un DOUBLE, non un float. Il subject
@@ -85,7 +85,7 @@ void covertToFloat(const std::string& literal)
     // DA CORREGGERE (tol): static_cast<long>(value) con un valore fuori dal range
     // del long e' comportamento indefinito. In piu' la tolleranza serve solo a
     // decidere se stampare ".0": con il formato std::fixed / ostringstream
-    // (vedi covertToInt) non ti serve piu' e puoi toglierla.
+    // (vedi convertToInt) non ti serve piu' e puoi toglierla.
     bool tol = std::fabs(value - static_cast<long>(value)) < 0.0000000000001;
     std::cout << "char: ";
     if (value < 0 || value > 127)
@@ -112,7 +112,7 @@ void covertToFloat(const std::string& literal)
     {
         // DA CORREGGERE (formato): il subject vuole "42.0f", quindi la logica e'
         // giusta, ma con numeri grandi (es. 100000000.0f) cout stampa "1e+08" e
-        // ottieni "1e+08.0f". Stessa soluzione di covertToInt (fixed oppure
+        // ottieni "1e+08.0f". Stessa soluzione di convertToInt (fixed oppure
         // ostringstream + controllo di '.' ed 'e').
         std::cout << value ;
         if(tol)
@@ -125,7 +125,7 @@ void covertToFloat(const std::string& literal)
     std::cout << "double: " << static_cast<double>(value) << (tol ? ".0" : "") << std::endl;
 }
 
-void covertToDouble(const std::string& literal)
+void convertToDouble(const std::string& literal)
 {
     // FIXME: valutare parser piu robusto rispetto ad atof.
     // DA CORREGGERE (overflow): atof non segnala errori. Usa std::strtod e
@@ -151,7 +151,7 @@ void covertToDouble(const std::string& literal)
     else
         // DA CORREGGERE (formato): con ./convert 42.0 stampa "42f" invece di
         // "42.0f", perche' cout non stampa i decimali a zero.
-        // COME: stessa soluzione di covertToInt (fixed oppure ostringstream e
+        // COME: stessa soluzione di convertToInt (fixed oppure ostringstream e
         // aggiungi ".0" se non c'e' il punto).
         std::cout << static_cast<float>(value) << "f" << std::endl;
 

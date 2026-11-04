@@ -23,16 +23,16 @@ void ScalarConverter::convert(const std::string& literal)
     switch (type)
     {
         case CHAR:
-            covertToChar(literal);
+            convertToChar(literal);
             break;
         case INT:
-            covertToInt(literal);
+            convertToInt(literal);
             break;
         case FLOAT:
-            covertToFloat(literal);
+            convertToFloat(literal);
             break;
         case DOUBLE:
-            covertToDouble(literal);
+            convertToDouble(literal);
             break;
         case SPECIAL:
             notConvert(literal);
