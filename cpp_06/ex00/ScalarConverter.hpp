@@ -8,8 +8,10 @@
 #include <cstdlib>
 #include <cctype>
 #include <cmath>
+#include <cerrno>
+#include <sstream>
 
-//Definisco struttura contenete tipi di cast
+//Definisco struttura contenente tipi di cast
 
 typedef enum e_cast_type
 {
