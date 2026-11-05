@@ -1,10 +1,18 @@
-// ex01 - Serialization
-// Segui GUIDA_ex01.md. Quando aggiungi Serializer.cpp, mettilo in SRCS nel Makefile.
-
+#include "Serializer.hpp"
 #include <iostream>
 
 int main(void)
 {
-    std::cout << "ex01: da implementare" << std::endl;
+    Data *data = new Data;
+    data->id = 0;
+    data->name = "prima";
+
+    uintptr_t raw = Serializer::serialize(data);
+    Data *serialized = Serializer::deserialize(raw);
+
+    std::cout << serialized->name << std::endl;
+    std::cout << serialized->id << std::endl;
+
+    delete data;
     return (0);
 }
