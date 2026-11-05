@@ -20,6 +20,7 @@ static std::string addPointZero(const std::string &s)
 static void printChar(double value)
 {
     std::cout << "char: ";
+    //Se value è NaN, oppure è negativo, oppure è maggiore di 127, il carattere è impossibile.
     if (value != value || value < 0 || value > 127) // value != value -> nan
         std::cout << "impossible" << std::endl;
     else if (std::isprint(static_cast<unsigned char>(value)))
@@ -42,13 +43,15 @@ static void printInt(double value)
 
 static void printFloat(float value)
 {
+    // stringstream è uno stream di output che scrive dentro una stringa, invece che direttamente sul terminale
     std::ostringstream oss;
-    oss << value;
+    oss << value;  //inserisco Il valore float viene convertito automaticamente in testo.
     std::cout << "float: " << addPointZero(oss.str()) << "f" << std::endl;
 }
 
 static void printDouble(double value)
 {
+    //Crea uno stream che salva il valore come testo invece di stamparlo subito.
     std::ostringstream oss;
     oss.precision(DBL_DIG); // 15 cifre significative: 2147483647 resta intero
     oss << value;
@@ -112,21 +115,24 @@ void convertToFloat(const std::string& literal)
     // (numero troppo vicino a 0, ritorna ~0). Solo l'overflow e' un errore.
     // strtod controlla il range del DOUBLE: il range del FLOAT (molto piu'
     // piccolo, ~3.4e38) lo controllo io a mano con FLT_MAX.
-    if ((errno == ERANGE && (tmp > DBL_MAX || tmp < -DBL_MAX))
-        || tmp > static_cast<double>(FLT_MAX)
-        || tmp < static_cast<double>(-FLT_MAX))
+    if (errno == ERANGE && (tmp == HUGE_VAL || tmp == -HUGE_VAL))
     {
         printAllImpossible();
         return ;
     }
 
-    // Ora sono sicuro che entra in un float: questo e' il "tipo reale".
-    float value = static_cast<float>(tmp);
-
-    printChar(static_cast<double>(value));
-    printInt(static_cast<double>(value));
-    printFloat(value);
-    printDouble(static_cast<double>(value));
+    // Il valore entra nel double; verifico separatamente se entra nel float.
+    printChar(tmp);
+    printInt(tmp);
+    if (tmp > static_cast<double>(FLT_MAX)
+        || tmp < static_cast<double>(-FLT_MAX))
+        std::cout << "float: impossible" << std::endl;
+    else
+    {
+        float value = static_cast<float>(tmp);
+        printFloat(value);
+    }
+    printDouble(tmp);
 }
 
 void convertToDouble(const std::string& literal)

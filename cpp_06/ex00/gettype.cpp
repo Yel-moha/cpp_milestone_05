@@ -16,51 +16,51 @@ static bool isInt(const std::string &literal)
     return (true);
 }
 
-static bool isFloat(const std::string &literal)
+static bool isDecimal(const std::string &literal, size_t length)
 {
-    size_t lenlit = literal.length();
-    if(lenlit < 2 || literal[lenlit - 1] != 'f')
+    if(length == 0)
         return (false);
-    lenlit--;
     size_t i = 0;
     if (literal[i] == '-' || literal[i] == '+')
         i++;
-    bool hasDecimalPoint = false;
-    for(; i < lenlit; i++)
+    bool hasPoint = false;
+    bool hasMantissaDigit = false;
+    while (i < length && literal[i] != 'e' && literal[i] != 'E')
     {
-        if (literal[i] == '.')
-        {
-            if (hasDecimalPoint)
-                return (false);
-            hasDecimalPoint = true;
-        }
-        else if (!std::isdigit(literal[i]))
+        if (std::isdigit(literal[i]))
+            hasMantissaDigit = true;
+        else if (literal[i] == '.' && !hasPoint)
+            hasPoint = true;
+        else
+            return (false);
+        i++;
+    }
+    if (!hasMantissaDigit)
+        return (false);
+    if (i < length)
+    {
+        i++;
+        if (i < length && (literal[i] == '-' || literal[i] == '+'))
+            i++;
+        size_t exponentStart = i;
+        while (i < length && std::isdigit(literal[i]))
+            i++;
+        if (i == exponentStart)
             return (false);
     }
-    return (true);  
+    return (i == length);
+}
+
+static bool isFloat(const std::string &literal)
+{
+    if (literal.length() < 2 || literal[literal.length() - 1] != 'f')
+        return (false);
+    return (isDecimal(literal, literal.length() - 1));
 }
 
 static bool isDouble(const std::string &literal)
 {
-    size_t lenlit = literal.length();
-    if(lenlit == 0)
-        return (false);
-    size_t i = 0;
-    if (literal[i] == '-' || literal[i] == '+')
-        i++;
-    bool hasDecimalPoint = false;
-    for(; i < lenlit; i++)
-    {
-        if (literal[i] == '.')
-        {
-            if (hasDecimalPoint)
-                return (false);
-            hasDecimalPoint = true;
-        }
-        else if (!std::isdigit(literal[i]))
-            return (false);
-    }
-    return (true);  
+    return (isDecimal(literal, literal.length()));
 }
 
 static bool isChar(const std::string &literal)
@@ -82,31 +82,13 @@ t_cast_type getType(const std::string &literal)
 {
     if (isSpecial(literal))
         return (SPECIAL);
-    size_t  dot = literal.find('.');
-    size_t  f = literal.find('f');
-    if(dot == std::string::npos && f == std::string::npos)
-    {
-        if (isChar(literal))
-            return (CHAR);
-        else if (isInt(literal))
-            return (INT);
-        else
-            return (NONE);
-    }
-    else if(dot != std::string::npos && f == std::string::npos)
-    {
-        if (isDouble(literal))
-            return (DOUBLE);
-        else
-            return (NONE);
-    }
-    else if(dot != std::string::npos && f != std::string::npos && f == literal.length() - 1)
-    {
-        if (isFloat(literal))
-            return (FLOAT);
-        else
-            return (NONE);
-    }
-    else
-        return (NONE);
+    if (isChar(literal))
+        return (CHAR);
+    if (isInt(literal))
+        return (INT);
+    if (isFloat(literal))
+        return (FLOAT);
+    if (isDouble(literal))
+        return (DOUBLE);
+    return (NONE);
 }
