@@ -5,10 +5,6 @@
 
 class B : public Base
 {
-public:
-    B();
-    ~B();
-    void identify() const;
 };
 
 #endif
